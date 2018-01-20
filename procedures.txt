@@ -1,0 +1,27 @@
+CREATE PROCEDURE CreateAppTable
+ 
+AS
+BEGIN
+CREATE TABLE App(
+ID int IDENTITY(1,1),
+Name varchar(50) NOT NULL,
+PRIMARY KEY (ID) )
+END 
+
+CREATE PROCEDURE InsertAppDataIntoTable
+@Name varchar(50)
+
+AS
+BEGIN
+INSERT INTO App(Name)
+VALUES ( @Name)
+END
+
+CREATE PROCEDURE ReadAppDataFromTable
+@ID int
+
+AS
+BEGIN
+SELECT * FROM App
+WHERE ID = @ID
+END
