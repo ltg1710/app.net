@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParserConfigs DataSourceName="HouseRentalInSaintJohn">
+    <CrawlInputParameterList>
+        <CrawlInputParameter>
+            <SeedUrl>http://www.kijiji.ca/b-house-rental/saint-john/c43l80017</SeedUrl>
+            <InitialDataItemList>
+                <InitialDataItem Name="Source" Value="HouseRentalInSaintJohn"/>
+            </InitialDataItemList>
+        </CrawlInputParameter>
+    </CrawlInputParameterList>
+    <ConnectionSettings>
+        <ConfigID>kijiji_nb_sj.xml</ConfigID>
+        <DBConnectionString>Data Source=DB;Initial Catalog=DBName;Integrated Security=True</DBConnectionString>
+        <PageDownloadRetryCount>3</PageDownloadRetryCount>
+        <PageTimeoutInSeconds>7</PageTimeoutInSeconds>
+        <PostPageDownloadDelayInSeconds>1</PostPageDownloadDelayInSeconds>
+    </ConnectionSettings>
+    <ParserConfig StartNodeXpath="//*[@id='MainContainer']/div[4]/div[3]/div/div[@data-ad-id]" SavePageContent="false" Type="Single">
+        <DataElement Name="image" xpath="//div[@class='image']/img" Attribute="src" Type="Single" Required="true"/>
+        <DataElement Name="price" xpath="//div[@class='price']/text()" Type="Single" Required="true">
+            <StringProcessors>
+                <Processor Name="Trim"/>
+            </StringProcessors>
+        </DataElement>
+        <DataElement StartNodeXpath="//div[@class='title']/a" Type="Single" Required="true">
+            <DataElement Name="title" xpath="text()" Type="Single"/>
+            <DataElement Name="URL" xpath="." Type="Single" Attribute="href"/>
+        </DataElement>
+        <DataElement StartNodeXpath="//div[@class='description']/text()" Type="Single" Required="true">
+            <StringProcessors>
+                <Processor Name="Trim"/>
+            </StringProcessors>
+        </DataElement>
+        <PagerConfig xpath="//div[@class='pagination']/a[@title='Next']" Attribute="href" BuildAbsoluteUrl="false" MaxPage="100"/>
+    </ParserConfig>
+</ParserConfigs>
